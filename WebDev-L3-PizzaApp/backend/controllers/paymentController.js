@@ -66,7 +66,7 @@ export const verifyPayment = async (req, res) => {
         return res.status(404).json({ message: "Order not found" });
     }
 
-    order.paymentStatus = "Paid";
+    order.paymentStatus = "paid";
     order.razorpayPaymentId = razorpay_payment_id;
     await order.save();
 

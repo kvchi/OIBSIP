@@ -111,3 +111,16 @@ export const updateOrderStatus = async (req, res) => {
 
     res.status(200).json({ message: "Order status updated", order });
 };
+
+// @route GET /api/orders
+export const getAllOrders = async (req, res) => {
+  const orders = await Order.find()
+  .populate("user", "name email")
+  .populate("items.base")
+  .populate("items.sauce")
+  .populate("items.cheese")
+  .populate("items.vegetables")
+  .sort({ createdAt: -1 });
+
+  res.status(200).json(orders);
+};
