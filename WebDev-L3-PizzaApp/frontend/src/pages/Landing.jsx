@@ -1,23 +1,51 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Landing() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    setTimeout(() => navigate("/"), 0);
+  };
+
   return (
     <div className="min-h-screen bg-stone-50">
       <nav className="flex justify-between items-center max-w-5xl mx-auto px-6 py-5">
         <span className="text-xl font-bold text-stone-800">🍕 Pizza Delivery App</span>
-        <div className="flex gap-3">
-          <Link
-            to="/login"
-            className="px-4 py-2 text-sm font-semibold text-stone-700 hover:text-stone-900"
-          >
-            Login
-          </Link>
-          <Link
-            to="/register"
-            className="px-4 py-2 text-sm font-semibold bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
-          >
-            Sign Up
-          </Link>
+        <div className="flex gap-3 items-center">
+          {user ? (
+            <>
+              <Link
+                to="/dashboard"
+                className="px-4 py-2 text-sm font-semibold bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+              >
+                Go to Dashboard
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm font-semibold text-stone-600 hover:text-orange-600 cursor-pointer"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-semibold text-stone-700 hover:text-stone-900"
+              >
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="px-4 py-2 text-sm font-semibold bg-orange-600 hover:bg-orange-700 text-white rounded-lg transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -29,10 +57,10 @@ export default function Landing() {
           Pick your base, sauce, cheese, and toppings — track it from the oven to your door, in real time.
         </p>
         <Link
-          to="/register"
+          to={user ? "/builder" : "/register"}
           className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-semibold px-8 py-3.5 rounded-lg text-lg transition-colors"
         >
-          Order Now
+          {user ? "Build a Pizza" : "Order Now"}
         </Link>
       </section>
 

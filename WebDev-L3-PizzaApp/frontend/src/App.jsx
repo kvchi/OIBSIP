@@ -1,5 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext.jsx';
+import { Routes, Route} from 'react-router-dom';
 import AuthPage from './pages/AuthPage.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import ForgotResetPassword from './pages/ForgotResetPassword.jsx';
@@ -13,18 +12,10 @@ import PizzaBuilder from './pages/PizzaBuilder.jsx';
 import Checkout from './pages/Checkout.jsx';
 import Landing from './pages/Landing.jsx';
 
-function RootRedirect() {
-  const { user } = useAuth();
-  if (user) {
-    return <Navigate to="/dashboard" replace />
-  }
-  return <Landing />
-}
-
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<RootRedirect />} />
+      <Route path="/" element={<Landing />} />
       <Route path="/login" element={<AuthPage mode="login" />} />
       <Route path="/register" element={<AuthPage mode="register" />} />
       <Route path="/verify-email/:token" element={<VerifyEmail />} />
