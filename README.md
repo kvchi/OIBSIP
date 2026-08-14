@@ -16,7 +16,7 @@ A full-stack pizza ordering and inventory management platform built for the **Oa
 ## Project Status
 
 **Backend: complete and tested.**
-**Frontend: in progress.**
+**Frontend: completed.**
 
 ## Features
 
@@ -51,3 +51,58 @@ A full-stack pizza ordering and inventory management platform built for the **Oa
 - Inventory oversight
 
 ## Project Structure
+backend/
+config/ # DB and Razorpay connection setup
+models/ # Mongoose schemas: User, Inventory, Order
+controllers/ # Route logic
+routes/ # Express route definitions
+middleware/ # JWT auth and role-based access control
+jobs/ # node-cron low-stock alert job
+utils/ # Email sending, token generation, Socket.io instance sharing
+seed.js # One-time script to populate realistic inventory data
+server.js
+frontend/
+src/
+pages/ # Route-level components
+components/ # Shared components (ProtectedRoute)
+context/ # AuthContext (shared login state)
+services/ # api.js (axios), socket.js (Socket.io client)
+
+## Getting Started
+
+### Backend
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in `backend/`:
+
+Seed realistic inventory data (safe to re-run — skips items that already exist):
+```bash
+node seed.js
+```
+
+Run the server:
+```bash
+npm run dev
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Visit `http://localhost:5173`.
+
+## Notes
+
+- Both servers (backend on :5000, frontend on :5173) must be running simultaneously for the app to work.
+- Razorpay is running in **test mode** — use Razorpay's official domestic Indian test card numbers to complete a payment.
+- If you encounter a CORS error on PATCH/DELETE requests in your browser, try an incognito window — some browser extensions are known to interfere with non-GET/POST requests during local development.
+
+## Author
+
+Built by Jonathan Mkpuma as part of the OIBSIP Level 3 Web Development internship.
